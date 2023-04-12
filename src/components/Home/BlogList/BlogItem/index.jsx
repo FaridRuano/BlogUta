@@ -2,33 +2,35 @@ import React from 'react'
 import Chip from '../../../common/Chip/index'
 import './style.css'
 import { Link } from 'react-router-dom'
-import { FaArrowCircleRight } from "react-icons/fa";
+import { FaArrowCircleRight } from "react-icons/fa"
+import avatar from './assets/author.jpg'
+
 
 const BlogItem = ({blog: {
     id,
-    description,
+    content,
     title,
-    createdAt,
-    authorName,
-    authorAvatar,
-    category,
+    date,
+    author,
+    tag,
     cover,
+    summary,
 }}) => (
     <div className='blogItem-wrap'>
-        <img src={cover} alt="cover" className='blogItem-cover'/>
-        <Chip label={category}/>
+        <img src={`http://localhost:8080/modelsDas/uploads/${cover}`} alt="cover" className='blogItem-cover'/>
+        <Chip label={tag}/>
         <h3>{title}</h3>
-        <p className='blogItem-desc'>{description}</p>
+        <p className='blogItem-desc'>{summary}</p>
 
         <footer>
             <div className='blogItem-author'>
-                <img src={authorAvatar} alt="avatar"/>
+                <img src={avatar} alt="avatar"/>
                 <div>
                     <h6>
-                        {authorName}
+                        {author}
                     </h6>
                     <p>
-                        {createdAt}
+                        {date}
                     </p>
                 </div>
             </div>

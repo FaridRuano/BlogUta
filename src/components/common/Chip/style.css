@@ -1,9 +1,17 @@
 .chip {
     font-size: .7rem;
-    background: linear-gradient(to right, #6190e8, #a7bfe8);
     color: #fff;
     padding: 0.3rem 0.5rem;
     border-radius: 5px;
     width: fit-content;
     text-transform: capitalize;
+    cursor: pointer;
+    background-image: var(--gradient);
+    background-size: 300%;
+    transition: background-position 0.5s ease-out, transform 0.2s ease-out; 
+}
+
+.chip:hover {
+    transform: scale(1.3) translateY(-5px);
+    background-position: right;
 }

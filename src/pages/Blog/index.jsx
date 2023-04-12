@@ -1,46 +1,57 @@
 import React, { useState, useEffect } from 'react'
-import { blogList } from '../../config/data'
 import { useParams, Link } from 'react-router-dom';
 import Chip from '../../components/common/Chip';
 import EmptyList from '../../components/common/EmptyList';
 import './style.css'
+import axios from 'axios';
+import {decode} from 'html-entities';
+
 
 const Blog = () => {
-  const {id}=useParams();
+  const id=useParams();
   const [blog, setBlog] = useState(null)
-
+  const [tags, setTags] = useState(null)
+  const baseUrl = 'http://localhost:8080/modelsDas/models/blogs/blogs.php'
+  
+  
   useEffect(()=>{
-    let blog=blogList.find((blog)=>blog.id===parseInt(id))
-
-    if(blog){
-      setBlog(blog)
+    const requestData=async()=>{
+      await axios.get(baseUrl,id).then(response=>{
+          setBlog(response.data);
+          setTags(response.data[0].tags)          
+      })
     }
-  }, [])
+    requestData()
+  },[])  
+
+  
+
+  if(!blog){
+    return <EmptyList/>
+  }
+    
   return (
     <div>
         <Link className='blog-goBack' to='/'><span>&#8592;</span> Go Back
         </Link>
-
-        {
-          blog ? (
           <div className="blog-wrap">
-            <header>
-              <p className='blog-date'>Published {blog.createdAt}</p>
-              <h1>{blog.title}</h1>
+            <header className='header-wrap'>
+              <p className='blog-date'>Publicado el {blog[0].date}</p>
+              <h1>{blog[0].title}</h1>            
+              <span className='blog-date'>Autor/es:<span style={{fontWeight: 700, color:'black'}}> {blog[0].author} </span></span>
               <div className='blog-subCategory'>
-                {blog.subCategory.map((category,index)=>
-                (<div><Chip key={index} label={category}/></div>))}
+               
+                {tags.map((item,index)=>(                
+                  <div key={index}><Chip label={blog[0].tags[index].tag}/></div>                  
+                ))} 
+
               </div>
             </header>
-            <img src={blog.cover} alt='cover' />
-            <p className='blog-desc'>
-              {blog.description}
-            </p>
-          </div>
-          ) : (
-            <EmptyList />
-          )
-        }
+            <img src={`http://localhost:8080/modelsDas/uploads/${blog[0].cover}`} alt='cover' className='blog-cover'/>              
+            <div className='blog-desc'>
+            <span dangerouslySetInnerHTML={{__html: blog[0].content}} />
+            </div>
+          </div>       
     </div>
   )
 }

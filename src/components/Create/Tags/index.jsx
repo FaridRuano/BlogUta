@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './style.css'
+import './style.scss'
 import { FaPlus } from "react-icons/fa";
 
 const TagsComponent = ({tags, setTags}) => {
@@ -20,22 +20,23 @@ const TagsComponent = ({tags, setTags}) => {
   
     const handleInputChange = (event) => {
       setNewTag(event.target.value);
-      console.log(tags)
     };
   
     return (
-      <div>
-        <form>
-          <label>Categorias</label>
-          <input type="text" value={newTag} placeholder='Maximo 5' onChange={handleInputChange} />
-          <FaPlus onClick={handleAddTag}/>
-        </form>
+      <div className='tags__wrap'>
+        <div className='tags__field__wrap'>
+          <input className='tags_field' id='tag' type="text" value={newTag} placeholder='Maximo 5' onChange={handleInputChange} />
+          <label className='tag_label'>Categorias</label>
+          <FaPlus onClick={handleAddTag} className='tag__add'/>
+        </div>
+        <div className='tags__tags__wrap'>
         {tags.map((tag) => (
-          <span key={tag} className="tag">
+          <span className='tags__tags__wrap__span' key={tag}>
             {tag}
-            <button onClick={() => handleDeleteTag(tag)}>x</button>
+            <span className='tags__cancel' onClick={() => handleDeleteTag(tag)}>X</span>
           </span>
         ))}
+        </div>        
       </div>
     );
   };

@@ -1,12 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import EmptyList from '../../components/common/EmptyList'
 import BlogList from '../../components/Home/BlogList'
 import Header from '../../components/Home/Header'
 import SearchBar from '../../components/Home/SearchBar'
-import { blogList } from '../../config/data'
+import axios from  'axios'
 
 const Home = () => {
-  const [blogs, setBlogs] = useState(blogList)
+  const [blogList, setBlogList] = useState([]);
+  const baseUrl = 'http://localhost:8080/modelsDas/models/blogs/blogs.php'
+  
+  const requestData=async()=>{
+    await axios.get(baseUrl).then(response=>{
+        setBlogList(response.data);
+    })
+  }
+  
+  useEffect(()=>{
+    requestData()
+  },[])
+
   const [searchKey, setSearchKey] = useState('')
 
   const handleSearchBar = (e) => {
@@ -16,14 +28,14 @@ const Home = () => {
 
   const handleSearchResults = () => {
     const allBlogs=blogList
-    const filteredBlogs=allBlogs.filter((blog) => 
-      blog.category.toLowerCase().includes(searchKey.toLowerCase().trim())
+    const filteredBlogs=allBlogs.filter((blogList) => 
+      blogList.tag.toLowerCase().includes(searchKey.toLowerCase().trim())
     )
-    setBlogs(filteredBlogs)
+    setBlogList(filteredBlogs)
   }
 
   const handleClearSearch=()=>{
-    setBlogs(blogList)
+    setBlogList(blogList)
     setSearchKey('')
   }
 
@@ -39,7 +51,7 @@ const Home = () => {
           handleSearchKey={(e) => setSearchKey(e.target.value)}
         />
         {/* Blog List & Empty List */}
-        {!blogs.length ? <EmptyList/> : <BlogList blogs={blogs}/>}
+        {!blogList.length ? <EmptyList/> : <BlogList blogs={blogList}/>}
     </div>
   )
 }
