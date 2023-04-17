@@ -6,6 +6,8 @@ import {  useNavigate } from "react-router-dom";
 import QuillEditor from '../../components/Create/Quill';
 import TagsComponent from '../../components/Create/Tags';
 import { FaCameraRetro } from 'react-icons/fa';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Create = () => {
 	const baseUrl = "http://localhost:8080/modelsDas/models/blogs/blogs.php";
@@ -25,6 +27,7 @@ const Create = () => {
 		author: '',
 		title: '',
         summary: '',
+        content: '',
 	  });
 
     const handleChange=e=>{		
@@ -40,19 +43,54 @@ const Create = () => {
     },[])
 
     const routeChange = () => {
-		history(`${process.env.PUBLIC_URL}/`);
+		history(`${process.env.PUBLIC_URL}/`)
 	};
 
     function validatePass(){
-        let pass = selectedBlog.password;
-		let key = passwords.some(value => value.password === pass);
-        return !key
-    }    
+        let pass = selectedBlog.password
+        if(pass.length>1){
+            let key = passwords.some(value => value.password === pass)
+            if(!key){
+                toast("Contraseña no es valida");
+                return true
+            }else{
+                return false
+            }
+        }else if(pass.length==0){
+            toast("Contraseña incompleto");
+            return true
+        }
+        return true
+    }     
+
+    function validateFields(){
+        if(selectedBlog.author.length < 3){
+            toast("Autor incompleto")
+            return true
+        }
+        if(selectedBlog.title.length < 3){
+            toast("Titulo incompleto")
+            return true
+        }
+        if(selectedBlog.summary.length < 3){
+            toast("Introduccion incompleta")
+            return true
+        }
+        if(selectedBlog.content.length < 10){
+            toast("Contenido incompleto")
+            return true
+        }                
+        if(cover==null){
+            toast("No existe portada");
+            return true
+        }
+        return false        
+    }
 
     const [quillContent, setQuillContent] = useState("");
 
     function handleQuillChange(content) {
-        setQuillContent(content);
+        setQuillContent(content)
     }
 
     const initialTags = [
@@ -69,26 +107,27 @@ const Create = () => {
       };
 
     const requestPost=async()=>{	
-        let validate = validatePass()
-            
-        if(!validate){					
-            try{
-                const formData = new FormData()
-                formData.append("METHOD", 'ADD')
-                formData.append("author", selectedBlog.author)
-                formData.append("title", selectedBlog.title)             
-                formData.append("summary", selectedBlog.summary)             
-                formData.append("pass_word", selectedBlog.password)             
-                formData.append("cover", cover)
-                formData.append("content", quillContent)
-                formData.append("tags", tags)
-                axios.post(baseUrl, formData)
-                    .then(response => console.log(response.data))
-                    .catch(error => console.log(error))
-            }catch(err){
-                console.log(err)                
+        if(!validatePass()){
+            if(!validateFields()){					
+                try{
+                    const formData = new FormData()
+                    formData.append("METHOD", 'ADD')
+                    formData.append("author", selectedBlog.author)
+                    formData.append("title", selectedBlog.title)             
+                    formData.append("summary", selectedBlog.summary)             
+                    formData.append("pass_word", selectedBlog.password)             
+                    formData.append("cover", cover)
+                    /* formData.append("content", quillContent) */
+                    formData.append("content", selectedBlog.content)
+                    formData.append("tags", tags)
+                    axios.post(baseUrl, formData)
+                        .then(response => console.log(response.data))
+                        .catch(error => console.log(error))
+                }catch(err){
+                    console.log(err)                
+                }
+                routeChange()
             }
-            routeChange()
         }
 	}
 
@@ -109,7 +148,7 @@ const Create = () => {
                     maxLength={49}
                     placeholder='Clave de Pub.'
                 />
-                <label className='form__label' for='password'>Clave de Pub.</label>
+                <label className='form__label' htmlFor='password'>Clave de Pub.</label>
             </div>
             <div className='form__group field'>
                 <input 
@@ -121,7 +160,7 @@ const Create = () => {
                     maxLength={49}
                     placeholder='Autores'
                 />
-                <label className='form__label' for='author'>Autores</label>
+                <label className='form__label' htmlFor='author'>Autores</label>
 
             </div>     
             </div>    
@@ -133,10 +172,10 @@ const Create = () => {
                     name="title"
                     id="title"
                     onChange={handleChange}
-                    maxLength={49}
+                    maxLength={99}
                     placeholder='Titulo'
                 />
-                <label className='form__label' for='title'>Titulo</label>
+                <label className='form__label' htmlFor='title'>Titulo</label>
 
             </div>             
             <div className='form__group field area'>                
@@ -148,11 +187,18 @@ const Create = () => {
                     maxLength={249}
                     placeholder='Introduccion'
                 />
-                <label className='form__label' for='cover'>Introduccion</label>
+                <label className='form__label' htmlFor='summary'>Introduccion</label>
 
             </div>                             
-            <div className=''>
+            {/* <div className=''>
                 <QuillEditor value={quillContent} onChange={handleQuillChange}/>
+            </div> */}
+            <div>
+                <textarea
+                    className='form__area'                    
+                    name='content'
+                    onChange={handleChange}                    
+                />
             </div>
             <div className='form__file__field'>
                 <input 
@@ -162,18 +208,16 @@ const Create = () => {
                     id="cover"
                     placeholder='Portada'
                 />
-                <label className='form__file__icon' for='cover'>Insertar Portada <FaCameraRetro/></label>
+                <label className='form__file__icon' htmlFor='cover'>Insertar Portada <FaCameraRetro/></label>
             </div> 
             <div>
                 <TagsComponent tags={tags} setTags={setTags}/>
             </div>            
-            <div className='Button-post'>
-                <button className='create-button' onClick={()=>requestPost()}>
-                    Publicar
-                </button>
-
-            </div>            
+            <button className='create-button' onClick={()=>requestPost()}>
+                Publicar
+            </button>
         </div>
+        <ToastContainer />
     </div>
   )
 }

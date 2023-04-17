@@ -9,6 +9,8 @@
 :root{
   --gradient: linear-gradient(90deg, #6190e8, #a7bfe8, #ff9966,#ff5e62);
   --gradient-header: linear-gradient(90deg, #fffdfd, #cfcfcf, #ffffff,#ebe9e9);
+  --gradient-footer: linear-gradient(90deg, #ff00dd, #00e1ff, #0051ff,#9c5eff);
+
 }
 
 body {

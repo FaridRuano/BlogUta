@@ -4,18 +4,23 @@ import './App.css'
 import Blog from './pages/Blog'
 import Create from './pages/Create'
 import Home from './pages/Home'
+import { Fragment } from 'react'
+import Footer from './components/Home/Footer'
 
 const App = () => {
   return (
-    <div className='container'>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' exact element={<Home/>}/>
-          <Route path='/Create' exact element={<Create/>}/>
-          <Route path='/blog/:id' element={<Blog/>}/>      
-        </Routes>      
-      </BrowserRouter>
-    </div>
+    <Fragment>
+      <div className='container'>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' exact element={<Home/>}/>
+            <Route path='/Create' exact element={<Create/>}/>
+            <Route path='/blog/:id' element={<Blog/>}/>      
+          </Routes>      
+        </BrowserRouter>
+      </div>
+      <Footer/>
+    </Fragment>
   )
 }
 

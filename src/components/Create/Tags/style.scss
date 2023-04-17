@@ -112,6 +112,21 @@ $gray: #9b9b9b;
     margin-left: 5px;
     transition: .3s;
 }
+@media (max-width: 580px) {
+    .tags__tags__wrap {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+}
+
+@media (max-width: 880px) {
+    .tags__tags__wrap {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+}
 
 
 

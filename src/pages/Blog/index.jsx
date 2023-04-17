@@ -4,20 +4,19 @@ import Chip from '../../components/common/Chip';
 import EmptyList from '../../components/common/EmptyList';
 import './style.css'
 import axios from 'axios';
-import {decode} from 'html-entities';
 
 
 const Blog = () => {
-  const id=useParams();
+  const {id}=useParams();
   const [blog, setBlog] = useState(null)
   const [tags, setTags] = useState(null)
-  const baseUrl = 'http://localhost:8080/modelsDas/models/blogs/blogs.php'
+  const baseUrl = `http://localhost:8080/modelsDas/models/blogs/blogs.php?id=${id}`
   
   
   useEffect(()=>{
     const requestData=async()=>{
-      await axios.get(baseUrl,id).then(response=>{
-          setBlog(response.data);
+      await axios.get(baseUrl).then(response=>{
+          setBlog(response.data)
           setTags(response.data[0].tags)          
       })
     }
@@ -42,7 +41,7 @@ const Blog = () => {
               <div className='blog-subCategory'>
                
                 {tags.map((item,index)=>(                
-                  <div key={index}><Chip label={blog[0].tags[index].tag}/></div>                  
+                  <div key={index}><Chip label={tags[index]}/></div>                  
                 ))} 
 
               </div>
