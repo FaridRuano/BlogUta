@@ -15,6 +15,7 @@ const Create = () => {
 
     const history = useNavigate();
     const [passwords, setPasswords] = useState([]);	
+    const [coverExists, setCoverExists] = useState(false);
  
     const requestPasswords=async()=>{
         await axios.get(passwordsUrl).then(response=>{
@@ -51,13 +52,13 @@ const Create = () => {
         if(pass.length>1){
             let key = passwords.some(value => value.password === pass)
             if(!key){
-                toast("Contraseña no es valida");
+                toast.error("Contraseña no es valida",{pauseOnHover:false,theme:"dark"});
                 return true
             }else{
                 return false
             }
         }else if(pass.length==0){
-            toast("Contraseña incompleto");
+            toast.error("Contraseña incompleta",{pauseOnHover:false,theme:"dark"});
             return true
         }
         return true
@@ -65,23 +66,23 @@ const Create = () => {
 
     function validateFields(){
         if(selectedBlog.author.length < 3){
-            toast("Autor incompleto")
+            toast.error("Autor incompleto",{pauseOnHover:false,theme:"dark"})
             return true
         }
         if(selectedBlog.title.length < 3){
-            toast("Titulo incompleto")
+            toast.error("Titulo incompleto",{pauseOnHover:false,theme:"dark"})
             return true
         }
         if(selectedBlog.summary.length < 3){
-            toast("Introduccion incompleta")
+            toast.error("Introduccion incompleta",{pauseOnHover:false,theme:"dark"})
             return true
         }
         if(selectedBlog.content.length < 10){
-            toast("Contenido incompleto")
+            toast.error("Contenido incompleto",{pauseOnHover:false,theme:"dark"})
             return true
         }                
         if(cover==null){
-            toast("No existe portada");
+            toast.error("No existe portada",{pauseOnHover:false,theme:"dark"});
             return true
         }
         return false        
@@ -103,7 +104,8 @@ const Create = () => {
     const [cover, setCover] = useState(null);
 
     const handleCoverChange = (e) => {
-        setCover(e.target.files[0]);
+        setCover(e.target.files[0])
+        setCoverExists(true)
       };
 
     const requestPost=async()=>{	
@@ -210,6 +212,8 @@ const Create = () => {
                 />
                 <label className='form__file__icon' htmlFor='cover'>Insertar Portada <FaCameraRetro/></label>
             </div> 
+            <p style={{display:coverExists ? '' : 'none', fontStyle:'italic'}} >Portada cargada</p>
+
             <div>
                 <TagsComponent tags={tags} setTags={setTags}/>
             </div>            

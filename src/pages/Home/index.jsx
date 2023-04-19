@@ -37,6 +37,7 @@ const Home = () => {
   const handleClearSearch=()=>{
     setBlogList(blogList)
     setSearchKey('')
+    requestData()
   }
 
   return (
