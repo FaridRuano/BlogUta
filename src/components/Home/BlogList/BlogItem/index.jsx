@@ -17,7 +17,7 @@ const BlogItem = ({blog: {
     summary,
 }}) => (
     <div className='blogItem-wrap'>
-        <img src={`http://localhost:8080/modelsDas/uploads/${cover}`} alt="cover" className='blogItem-cover'/>
+        <img src={`https://talleresfisei.uta.edu.ec/modelsDas/uploads/${cover}`} alt="cover" className='blogItem-cover'/>
         <Chip label={tag}/>
         <h3>{title}</h3>
         <p className='blogItem-desc'>{summary}</p>

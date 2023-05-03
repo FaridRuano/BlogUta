@@ -10,7 +10,7 @@ const Blog = () => {
   const {id}=useParams();
   const [blog, setBlog] = useState(null)
   const [tags, setTags] = useState(null)
-  const baseUrl = `http://localhost:8080/modelsDas/models/blogs/blogs.php?id=${id}`
+  const baseUrl = `https://talleresfisei.uta.edu.ec/modelsDas/models/blogs/blogs.php?id=${id}`
   
   
   useEffect(()=>{
@@ -46,7 +46,7 @@ const Blog = () => {
 
               </div>
             </header>
-            <img src={`http://localhost:8080/modelsDas/uploads/${blog[0].cover}`} alt='cover' className='blog-cover'/>              
+            <img src={`https://talleresfisei.uta.edu.ec/modelsDas/uploads/${blog[0].cover}`} alt='cover' className='blog-cover'/>              
             <div className='blog-desc'>
             <span dangerouslySetInnerHTML={{__html: blog[0].content}} />
             </div>

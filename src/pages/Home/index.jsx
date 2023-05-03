@@ -7,7 +7,7 @@ import axios from  'axios'
 
 const Home = () => {
   const [blogList, setBlogList] = useState([]);
-  const baseUrl = 'http://localhost:8080/modelsDas/models/blogs/blogs.php'
+  const baseUrl = 'https://talleresfisei.uta.edu.ec/modelsDas/models/blogs/blogs.php'
   
   const requestData=async()=>{
     await axios.get(baseUrl).then(response=>{

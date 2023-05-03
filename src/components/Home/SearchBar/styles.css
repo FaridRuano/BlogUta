@@ -4,6 +4,7 @@
     justify-content: space-between;
     margin: 1.5rem auto 2rem auto;
     align-items: center;
+    gap: 1rem;
 }
 
 .searchBar-wrap{
@@ -16,13 +17,20 @@
 
 .searchBar-wrap form{
     display: flex;
-    align-items: center;    
+    align-items: center;   
 }
 
 .searchBar-wrap input{
     background-color: #f0f0f0;
     outline: none;
     border: none;
+    transition: transform 1s;
+}
+
+@media (max-width: 400px) {
+    .searchBar-wrap input{
+        width: 100px;
+    }
 }
 
 .spanBar-wrap span{

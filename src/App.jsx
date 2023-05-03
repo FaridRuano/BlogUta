@@ -11,7 +11,7 @@ const App = () => {
   return (
     <Fragment>
       <div className='container'>
-        <BrowserRouter>
+        <BrowserRouter basename='/das'>
           <Routes>
             <Route path='/' exact element={<Home/>}/>
             <Route path='/Create' exact element={<Create/>}/>

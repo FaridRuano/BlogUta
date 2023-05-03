@@ -10,8 +10,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Create = () => {
-	const baseUrl = "http://localhost:8080/modelsDas/models/blogs/blogs.php";
-	const passwordsUrl = "http://localhost:8080/modelsDas/models/passwords/passwords.php";
+	const baseUrl = "https://talleresfisei.uta.edu.ec/modelsDas/models/blogs/blogs.php";
+	const passwordsUrl = "https://talleresfisei.uta.edu.ec/modelsDas/models/passwords/passwords.php";
 
     const history = useNavigate();
     const [passwords, setPasswords] = useState([]);	
@@ -44,7 +44,7 @@ const Create = () => {
     },[])
 
     const routeChange = () => {
-		history(`${process.env.PUBLIC_URL}/`)
+		history(`${process.env.PUBLIC_URL}../`)
 	};
 
     function validatePass(){

@@ -5,15 +5,19 @@ import './styles.css'
 const Header = () => {
   return (
     <header className='home-header'>
-        <h2> Blog de conocimientos </h2>
+        <h2> BLOG DE CONOCIMIENTOS </h2>
         <h1>
-            <span>"</span> D.A.S  <span>"</span>
+            <span>"</span> DESARROLLO ASISTIDO POR SOFTWARE <span>"</span>            
         </h1>
+        <div className="sigles-container">
+          <span className="home-sigles">D.A.S</span>
+        </div>
         <p>
-            Encuentra informacion compartida
-            <br />
-            por estudiantes de la carrera de 
-            software.
+        Encuentra información de herramientas que apoyan en el proceso de 
+        desarrollo de software. Publicaciones desarrolladas por estudiantes
+        de Séptimo Semestre de la Carrera de Software en el 
+        <br/>
+        Periodo Académico Abril-Septiembre 2023.
         </p>
     </header>
   )
